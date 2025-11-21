@@ -1,0 +1,66 @@
+/* In client/styles/main.css */
+
+h1,
+h2 {
+  text-align: center;
+}
+
+/* Grid container styling */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 equal-width columns */
+  gap: 10px; /* Space between tiles */
+  margin: 2rem auto;
+  width: 90vw; /* Adjust overall width as needed */
+  max-width: 800px;
+}
+
+/* Tile styling */
+.calendar-tile {
+  aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
+  border: 2px solid #333;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden; /* This will help with the image scaling */
+  display: flex; /* Use flexbox for centering content */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Closed tile state */
+.calendar-tile.closed {
+  background-color: #f0f0f0;
+  font-size: 2rem;
+  color: #333;
+}
+
+/* Open tile state */
+.calendar-tile.open {
+  background-color: #fff;
+}
+
+/* Content inside the open tile */
+.tile-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.tile-content img {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  display: block;
+}
+
+.tile-content p {
+  margin: 5px 0 0;
+  font-size: 0.8rem;
+}
