@@ -8,7 +8,36 @@ import { isTileReady } from '../utils/checkDate'
 const calendarSize = 25
 
 function Calendar() {
-  const [shuffledTiles, setShuffledTiles] = useState<Tile[]>([])
+  //Contains shuffledTiles state, so local storage fits here.
+
+  const [shuffledTiles, setShuffledTiles] = useState<Tile[]>(() => {
+    try {
+      const savedTiles = localStorage.getItem('adventCalendarState')
+      if (savedTiles) {
+        return JSON.parse(savedTiles)
+      }
+    } catch (error) {
+      console.error('failed to load state from localStorage', error)
+    }
+    //If no saved data (or failed to load), return an empty array.
+    return []
+  })
+
+  useEffect(() => {
+    //This effect each time shuffledTiles changes.
+    try {
+      //Don't save initial empty array state
+      if (shuffledTiles.length > 0) {
+        localStorage.setItem(
+          'adventCalendarState',
+          JSON.stringify(shuffledTiles),
+        )
+      }
+    } catch (error) {
+      console.error('Failed to save state to local storage', error)
+    }
+  }, [shuffledTiles])
+
   useEffect(() => {
     const initialTiles: Tile[] = Array.from(
       { length: calendarSize },

@@ -39,7 +39,7 @@ describe('Calendar Component', () => {
     expect(firstTile).toHaveClass('closed')
     expect(firstTile).not.toHaveClass('open')
 
-    //Simulate click on the first tile
+    //Simulate click on the first tile.
 
     await userEvent.click(firstTile)
 
@@ -49,9 +49,9 @@ describe('Calendar Component', () => {
   })
 
   it('should not open a tile if it is not ready, should show an alert', async () => {
-    //Mock window.alert to prevent it firing during test
+    //Mock window.alert to prevent it firing during test.
     const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {})
-    //Set isTileReady to false
+    //Set isTileReady to false.
     vi.mocked(isTileReady).mockReturnValue(false)
     render(<Calendar />)
 
@@ -60,6 +60,7 @@ describe('Calendar Component', () => {
     expect(firstTile).toHaveClass('closed')
 
     await userEvent.click(firstTile)
+    //If we didn't call this, the next condition would be checked preemptively.
 
     expect(firstTile).toHaveClass('closed')
     expect(firstTile).not.toHaveClass('open')
