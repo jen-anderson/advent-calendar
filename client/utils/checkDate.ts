@@ -3,7 +3,7 @@ export function isTileReady(day: number): boolean {
   const currentDay = today.getDate()
   const currentMonth = today.getMonth() //0 for January
 
-  const adventMonth = 10 //December
+  const adventMonth = 11 //11 is December
 
   if (currentMonth === adventMonth) {
     return currentDay >= day

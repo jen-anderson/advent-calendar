@@ -9,7 +9,7 @@ h2 {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 equal-width columns */
-  gap: 10px; /* Space between tiles */
+  gap: 10px;
   margin: 2rem auto;
   width: 90vw; /* Adjust overall width as needed */
   max-width: 800px;
@@ -17,16 +17,66 @@ h2 {
 
 /* Tile styling */
 .calendar-tile {
-  aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
-  border: 2px solid #333;
+  aspect-ratio: 1 / 1; /* Square aspect ratio */
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
   position: relative;
-  overflow: hidden; /* This will help with the image scaling */
-  display: flex; /* Use flexbox for centering content */
+  overflow: hidden; /* For image scaling */
+  display: flex; /* Flexbox for centering content */
   align-items: center;
   justify-content: center;
+  perspective: 1000px;
+  border: none;
+}
+
+.tile-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.calendar-tile.open .tile-flipper {
+  transform: rotateY(180deg);
+}
+
+.tile-front,
+.tile-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #333;
+  box-sizing: border-box;
+  border-radius: 5px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.tile-front {
+  background-color: #f0f0f0;
+  font-size: 2rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-back {
+  background-color: #fff;
+  transform: rotateY(180deg); /*Pre-rotate so displays correctly when flipped */
+}
+.calendar-tile:focus-visible {
+  outline: 3px solid dodgerblue;
+  outline-offset: 3px;
+}
+
+.calendar-tile.closed:hover {
+  background-color: #81b981;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.4s ease-in-out; /*Smooth transition for effects */
 }
 
 /* Closed tile state */
@@ -49,8 +99,6 @@ h2 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5px;
-  box-sizing: border-box;
 }
 
 .tile-content img {

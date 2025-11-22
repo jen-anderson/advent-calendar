@@ -23,33 +23,38 @@ function makeTile({ tile, onClick }: TileComponent) {
       onKeyDown={handleKeyDown}
       tabIndex={0} //Make focusable by keyboard
       role="button"
+      aria-label={`Tile ${tile.id}`}
     >
-      {tile.isOpen ? (
-        <div className="tile-content">
-          <img src={tile.image} alt={`Day ${tile.id}`} />
-          <p>{tile.text}</p>
-          {/* eslint-disable jsx-a11y/media-has-caption */}
-          {tile.music && (
-            <audio src={tile.music} controls>
-              {tile.captionFile && (
-                <track
-                  kind="captions"
-                  src={tile.captionFile}
-                  srcLang="en"
-                  label="English captions (Placeholder)"
-                  default
-                />
-              )}
-              Your browser does not support the audio element.
-            </audio>
-          )}
-          {/* eslint-enable jsx-a11y/media-has-caption */}
-        </div>
-      ) : (
-        <div className="tile-closed">
+      {/*Workaround to prevent flip effect from also returning flipped text and content of the card.
+      The tile is split to two sides, front and back. Front is rotated 180 so it 
+      reorientates correctly on flip. Back is hidden so that it doesn't show during effect. */}
+      <div className="tile-flipper">
+        <div className="tile-front">
           <span>{tile.id}</span>
         </div>
-      )}
+        <div className="tile-back">
+          <div className="tile-content">
+            <img src={tile.image} alt={`Day ${tile.id}`} />
+            <p>{tile.text}</p>
+            {/* eslint-disable jsx-a11y/media-has-caption */}
+            {tile.music && (
+              <audio src={tile.music} controls>
+                {tile.captionFile && (
+                  <track
+                    kind="captions"
+                    src={tile.captionFile}
+                    srcLang="en"
+                    label="English captions (Placeholder)"
+                    default
+                  />
+                )}
+                Your browser does not support the audio element.
+              </audio>
+            )}
+            {/* eslint-enable jsx-a11y/media-has-caption */}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
